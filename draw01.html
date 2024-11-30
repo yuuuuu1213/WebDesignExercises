@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link type="text/css" rel="stylesheet" href="http://meziro.sun.ac.jp/~sun/GA/default.css">
+<script src="http://meziro.sun.ac.jp/~sun/GA/2D_graphics.js"></script>
+
+<script>
+// Grobal variable
+let Num_pixel = 0;
+
+let Hue = 0;
+function random_pixel(){
+	let x, y, w, h, r, g, b, col;
+
+	x = Math.floor(Math.random()*X_size);
+	y = Math.floor(Math.random()*Y_size);
+	w = Math.floor(Math.random()*100+1);
+	h = Math.floor(Math.random()*100+1);
+	r = Math.floor(Math.random()*256);
+	g = Math.floor(Math.random()*256);
+	b = Math.floor(Math.random()*256);
+
+	col = `hsla(${Hue},100%,50%,${Math.random()})`;
+	Hue++;
+	draw_rectangle(x-w/2, y-h/2, w, h, col);
+	Num_pixel ++;
+	document.getElementById("parameters").innerHTML = `点の数 ${Num_pixel}`;
+}
+
+function draw_polygon(x, y, l, n, k, fai, col, fx, fy){
+	let i, theta, px = [], py = [];
+
+	for(i=0; i < n; i++){
+		theta = i*2.0*Math.PI/n + fai;
+		px[i] = x + r*Math.cos(theta);
+		py[i] = y + r*Math.sin(theta);
+	}
+
+	for(i=0; i < n; i++){
+		draw_line(px[i], py[i], px[(i+k)%n], py[(i+k)%n], col);
+	}
+}
+
+function random_polygon(){
+	x = Math.floor(Math.random()*X_size);
+	y = Math.floor(Math.random()*Y_size);
+	l = Math.random()*1+100;
+	r = Math.floor(Math.random()*256);
+	g = Math.floor(Math.random()*256);
+	b = Math.floor(Math.random()*256);
+	fai = Math.PI*2.0;
+	col = `rgba(${r},${g},${b},${Math.random()})`;
+	n = Math.floor(Math.random()*98+1);
+    k = Math.floor(n*Math.random()+1);
+	draw_polygon(x, y, l, n, k, fai, col, Math.random()*1000, Math.random()*1000);
+}
+</script>
+</head>
+
+<body>
+<h1>Draw pixels</h1>
+<canvas id="canvas" width="1280" height="720"></canvas>
+<input type="button" value="連続ピクセル描画" onclick="setInterval(`random_polygon();`,2)">
+<input type="button" value="じわっと消す" onclick="setInterval('fill_canvas(`rgba(0,0,0,0.02)`)',20);">
+<input type="button" value="png画像作成" onclick="canvas_to_png('png_image');">
+<br>
+<div id="parameters"></div>
+<img id="png_image">
+</body>
+</html>

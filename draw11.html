@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>draw11</title>
+</head>
+<body>
+<h1>draw11</h1>
+<canvas id="canvas01" width="700" height="500"></canvas>
+<script>
+class Affine {
+   constructor(ctx) {
+      this.ctx = ctx;
+      this.mtx = [
+        [1,0,0],
+        [0,1,0],
+        [0,0,1],
+      ];
+    }
+   init() {
+      this.mtx[0][0] = 1;
+      this.mtx[0][1] = 0;
+      this.mtx[0][2] = 0;
+      this.mtx[1][0] = 0;
+      this.mtx[1][1] = 1;
+      this.mtx[1][2] = 0;
+      this.mtx[2][0] = 0;
+      this.mtx[2][1] = 0;
+      this.mtx[2][2] = 1;
+   }
+   vtrans(vtx) {
+      var v = [0,0,1];
+      v[0] = vtx[0] * this.mtx[0][0] + vtx[1] * this.mtx[1][0] + vtx[2] * this.mtx[2][0];
+      v[1] = vtx[0] * this.mtx[0][1] + vtx[1] * this.mtx[1][1] + vtx[2] * this.mtx[2][1];
+      v[2] = vtx[0] * this.mtx[0][2] + vtx[1] * this.mtx[1][2] + vtx[2] * this.mtx[2][2];
+      return v;
+   }
+   mtrans(m) {
+      var cmp = new Array(3);
+      var v = new Array(3);
+      v[0] = this.mtx[0][0] * m[0][0] + this.mtx[0][1] * m[1][0] + this.mtx[0][2] * m[2][0];
+      v[1] = this.mtx[0][0] * m[0][1] + this.mtx[0][1] * m[1][1] + this.mtx[0][2] * m[2][1];
+      v[2] = this.mtx[0][0] * m[0][2] + this.mtx[0][1] * m[1][2] + this.mtx[0][2] * m[2][2];
+      cmp[0] = v;
+      v = new Array(3);
+      v[0] = this.mtx[1][0] * m[0][0] + this.mtx[1][1] * m[1][0] + this.mtx[1][2] * m[2][0];
+      v[1] = this.mtx[1][0] * m[0][1] + this.mtx[1][1] * m[1][1] + this.mtx[1][2] * m[2][1];
+      v[2] = this.mtx[1][0] * m[0][2] + this.mtx[1][1] * m[1][2] + this.mtx[1][2] * m[2][2];
+      cmp[1] = v;
+      v = new Array(3);
+      v[0] = this.mtx[2][0] * m[0][0] + this.mtx[2][1] * m[1][0] + this.mtx[2][2] * m[2][0];
+      v[1] = this.mtx[2][0] * m[0][1] + this.mtx[2][1] * m[1][1] + this.mtx[2][2] * m[2][1];
+      v[2] = this.mtx[2][0] * m[0][2] + this.mtx[2][1] * m[1][2] + this.mtx[2][2] * m[2][2];
+      cmp[2] = v;
+      this.mtx = cmp;
+   }
+   moveTo(x,y) {
+      var v = [x,y,1];
+      var vtx = this.vtrans(v);
+      this.ctx.moveTo(vtx[0],vtx[1]);
+   }
+   lineTo(x,y) {
+      var v = [x,y,1];
+      var vtx = this.vtrans(v);
+      this.ctx.lineTo(vtx[0],vtx[1]);
+   }
+   scale(x,y) {
+      var m = [
+          [x,0,0],
+          [0,y,0],
+          [0,0,1]
+      ];
+      this.mtrans(m);
+   }
+   rotate(th) {
+      var m = [
+          [Math.cos(th),Math.sin(th),0],
+          [-Math.sin(th),Math.cos(th),0],
+          [0,0,1]
+      ];
+      this.mtrans(m);
+   }
+   translate(x,y) {
+      var m = [
+        [1,0,0],
+        [0,1,0],
+        [x,y,1]
+      ];
+      this.mtrans(m);
+   }
+
+ }
+
+ onload = function() {
+    var canvas = document.getElementById("canvas01");
+    var ctx = canvas.getContext("2d");
+    
+    function quad(mtx) {
+        ctx.beginPath();
+        mtx.moveTo(50,0);
+        mtx.lineTo(50,200);
+        mtx.lineTo(-50,200);
+        mtx.lineTo(-50,0);
+        mtx.lineTo(50,0);
+        ctx.fill();
+    }
+
+    var left = new Affine(ctx);
+    left.scale(0.8,0.8);
+    left.rotate(-Math.PI / 4);
+    left.translate(0,200);
+
+    var right = new Affine(ctx);
+    right.scale(0.8,0.8);
+    right.rotate(Math.PI / 4);
+    right.translate(0,200);
+
+    function recursiveTree(transform,level) {
+        quad(transform);
+        if(level < maxLevel) {
+            var leftBranch = new Affine(ctx);
+            leftBranch.mtrans(left.mtx);
+            leftBranch.mtrans(transform.mtx);
+            recursiveTree(leftBranch,level + 1);
+
+            var rightBranch = new Affine(ctx);
+            rightBranch.mtrans(right.mtx);
+            rightBranch.mtrans(transform.mtx);
+            recursiveTree(rightBranch,level + 1);
+        }
+    }
+
+    var affine = new Affine(ctx);
+    affine.scale(0.4,0.4);
+    affine.rotate(Math.PI);
+    affine.translate(250,450);
+
+    ctx.fillStyle = getRandomColor();
+    var maxLevel = 10;
+    recursiveTree(affine,1);
+}
+
+function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+}
+
+</script>
+</body>
+</html>

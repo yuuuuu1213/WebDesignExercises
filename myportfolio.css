@@ -1,0 +1,430 @@
+@charset "utf-8";
+/*========= レイアウトのためのCSS ===============*/
+#header {}
+h1 {
+  background-image: url("image/white_00003.jpg");
+  color: #000;
+  text-shadow: 0 0 15px #666;
+  text-align: center;
+  font-family: "Playwrite AU TAS", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  padding: 20vw;
+}
+.title {
+  font-size: 10vh;
+}
+.container {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+.box {
+  color: #000;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.images-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.left, .right {
+  flex: 1;
+  margin: 0 10px;
+}
+.left image, .right image {
+  opacity: 1;
+  transition: .3s ease-in-out; /*移り変わる速さを変更したい場合はこの数値を変更*/
+}
+.left a:hover img, .right a:hover img {
+  /*hoverした時の変化*/
+  opacity: 0.8; /*透過具合を変更したい場合はこの数値を変更*/
+}
+img {
+  max-width: 80%;
+  height: auto;
+}
+#transparency{
+  color: #333;
+  text-decoration: none;
+}
+#box1 {
+  background-image: url("image/pastel_00004.jpg");
+}
+#box2 {
+  background-image: url("image/pastel_00003.jpg");
+}
+#box3 {
+  background-image: url("image/pastel_00021.jpg");
+}
+#box4 {
+  background-image: url("image/pastel_00010.jpg");
+}
+#footer {
+  background: #333;
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+}
+#footer a {
+  color: #fff;
+}
+/*========= ページネーションCSS ===============*/
+.pagination {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1em;
+  z-index: 10;
+  list-style: none;
+}
+.pagination a {
+  display: block;
+  height: 20px;
+  margin-bottom: 5px;
+  color: #000;
+  position: relative;
+  padding: 4px;
+}
+.pagination a.active:after {
+  box-shadow: inset 0 0 0 5px;
+}
+/*現在地表示のテキストの設定*/
+.pagination a .hover-text {
+  position: absolute;
+  right: 15px;
+  top: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
+  padding-right: 15px;
+}
+.pagination a:hover .hover-text {
+  opacity: 1;
+}
+.pagination a:after {
+  -webkit-transition: box-shadow 0.5s ease;
+  transition: box-shadow 0.5s ease;
+  width: 10px;
+  height: 10px;
+  display: block;
+  border: 1px solid;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 3px;
+  bottom: 0;
+}
+/* header文字のアニメーション用CSS */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: black;
+  }
+}
+.TextTyping {
+  overflow: visible;
+  white-space: nowrap;
+  border-right: .15em solid black;
+  animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+  font-family: "Playwrite AU TAS", cursive;
+  font-size: 2em;
+}
+/* プログレスバーのスタイル */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: #ddd;
+  z-index: 9999;
+}
+#progress {
+  height: 100%;
+  width: 0;
+  background-color: #4caf50;
+  transition: width 0.4s ease;
+}
+/*========= ナビゲーションのためのCSS ===============*/
+/*アクティブになったエリア*/
+#g-nav.panelactive {
+  /*position:fixed;にし、z-indexの数値を大きくして前面へ*/
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+}
+/*丸の拡大*/
+.circle-bg {
+  position: fixed;
+  z-index: 3;
+  /*丸の形*/
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #999;
+  /*丸のスタート位置と形状*/
+  transform: scale(0); /*scaleをはじめは0に*/
+  right: -50px;
+  bottom: -50px;
+  transition: all .6s; /*0.6秒かけてアニメーション*/
+}
+.circle-bg.circleactive {
+  transform: scale(50); /*クラスが付与されたらscaleを拡大*/
+}
+#g-nav.panelactive {
+  display: block; /*クラスが付与されたら出現*/
+}
+/*ナビゲーション*/
+#g-nav ul {
+  opacity: 0; /*はじめは透過0*/
+  /*ナビゲーション天地中央揃え*/
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/*背景が出現後にナビゲーションを表示*/
+#g-nav.panelactive ul {
+  opacity: 1;
+}
+/* 背景が出現後にナビゲーション li を表示 */
+#g-nav.panelactive ul li {
+  animation-name: gnaviAnime;
+  animation-duration: 1s;
+  animation-delay: .2s; /*0.2 秒遅らせて出現*/
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+@keyframes gnaviAnime {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/*リストのレイアウト設定*/
+#g-nav li {
+  text-align: center;
+  list-style: none;
+}
+#g-nav li a {
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+/*========= ボタンのためのCSS ===============*/
+.openbtn1 {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999; /*ボタンを最前面に*/
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+}
+/*×に変化*/
+.openbtn1 span {
+  display: inline-block;
+  transition: all .4s;
+  position: absolute;
+  left: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background-color: #666;
+  width: 45%;
+}
+.openbtn1 span:nth-of-type(1) {
+  top: 15px;
+}
+.openbtn1 span:nth-of-type(2) {
+  top: 23px;
+}
+.openbtn1 span:nth-of-type(3) {
+  top: 31px;
+}
+.openbtn1.active span:nth-of-type(1) {
+  top: 18px;
+  left: 18px;
+  transform: translateY(6px) rotate(-45deg);
+  width: 30%;
+}
+.openbtn1.active span:nth-of-type(2) {
+  opacity: 0;
+}
+.openbtn1.active span:nth-of-type(3) {
+  top: 30px;
+  left: 18px;
+  transform: translateY(-6px) rotate(45deg);
+  width: 30%;
+}
+/*== ボタン共通設定 */
+.btn {
+  /*アニメーションの起点とするためrelativeを指定*/
+  position: relative;
+  overflow: hidden;
+  /*ボタンの形状*/
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid #555; /* ボーダーの色と太さ */
+  padding: 10px 30px;
+  text-align: center;
+  outline: none;
+  /*アニメーションの指定*/
+  transition: ease .2s;
+}
+/*ボタン内spanの形状*/
+.btn span {
+  position: relative;
+  z-index: 3; /*z-indexの数値をあげて文字を背景よりも手前に表示*/
+  color: #333;
+}
+.btn:hover span {
+  color: #fff;
+}
+/*== 背景が流れる（左から右） */
+.bgleft:before {
+  content: '';
+  /*絶対配置で位置を指定*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  /*色や形状*/
+  background: #333; /*背景色*/
+  width: 100%;
+  height: 100%;
+  /*アニメーション*/
+  transition: transform .6s cubic-bezier(0.8, 0, 0.2, 1) 0s;
+  transform: scale(0, 1);
+  transform-origin: right top;
+}
+/*hoverした際の形状*/
+.bgleft:hover:before {
+  transform-origin: left top;
+  transform: scale(1, 1);
+}
+/*========= スクロールダウンのためのCSS ===============*/
+/*=== 矢印が動いてスクロールを促す ====*/
+/*スクロールダウン全体の場所*/
+.scrolldown4 {
+  /*描画位置*/
+  position: absolute;
+  bottom: 1%;
+  right: 50%;
+  /*矢印の動き1秒かけて永遠にループ*/
+  animation: arrowmove 1s ease-in-out infinite;
+}
+/*下からの距離が変化して全体が下→上→下に動く*/
+@keyframes arrowmove {
+  0% {
+    bottom: 1%;
+  }
+  50% {
+    bottom: 3%;
+  }
+  100% {
+    bottom: 1%;
+  }
+}
+/*Scrollテキストの描写*/
+.scrolldown4 span {
+  /*描画位置*/
+  position: absolute;
+  left: -20px;
+  bottom: 10px;
+  /*テキストの形状*/
+  color: #000;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  /*縦書き設定*/
+  -ms-writing-mode: tb-rl;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+}
+/* 矢印の描写 */
+.scrolldown4:before {
+  content: "";
+  /*描画位置*/
+  position: absolute;
+  bottom: 0;
+  right: -6px;
+  /*矢印の形状*/
+  width: 1px;
+  height: 20px;
+  background: #000;
+  transform: skewX(-31deg);
+}
+.scrolldown4:after {
+  content: "";
+  /*描画位置*/
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /*矢印の形状*/
+  width: 1px;
+  height: 50px;
+  background: #000;
+}
+/* 画面サイズに応じて文字サイズを調整 */
+@media screen and (max-width: 1200px) {
+  .TextTyping {
+    font-size: 1.5em;
+  }
+}
+@media screen and (max-width: 768px) {
+  .images-container {
+    flex-direction: column; /* 縦に並べる */
+    align-items: center; /* 中央に揃える */
+  }
+  .left, .right {
+    margin: 10px 0; /* 上下のマージンを追加 */
+  }
+  .TextTyping {
+    font-size: 1.2em;
+  }
+  /*768px以下は現在地表示のテキストを非表示*/
+  .pagination a .hover-text {
+    display: none;
+  }
+}
+@media screen and (max-width: 480px) {
+  .TextTyping {
+    font-size: 1em;
+  }
+  .images-container {
+    flex-direction: column; /* 縦に並べる */
+    align-items: center; /* 中央に揃える */
+  }
+  .left, .right {
+    margin: 10px 0; /* 上下のマージンを追加 */
+  }
+}

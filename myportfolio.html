@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My portfolio</title>
+<!-- GoogleFonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+TAS:wght@100..400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
+<!-- CSS -->
+<link href="myportfolio.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/6-1/css/reset.css">
+</head>
+<body>
+<!-- プログレスバー -->
+<div id="progress-bar">
+  <div id="progress"></div>
+</div>
+<header id="header">
+  <h1>
+    <p class="title">My portfolio</p>
+    <p class="TextTyping">Name: Itsuwa Ayumu</p>
+  </h1>
+  <div class="scrolldown4"><span>Scroll</span></div>
+</header>
+<!-- メニュー -->
+<div class="openbtn1"><span></span><span></span><span></span></div>
+<nav id="g-nav">
+  <ul>
+    <li><a href="#">Top</a></li>
+    <li><a href="#box1">Webプログラミング基礎演習</a></li>
+    <li><a href="#box2">コンピュータグラフィックス、CGアニメーション</a></li>
+    <li><a href="#box3">数理造形演習、コンピュータグラフィックス演習</a></li>
+    <li><a href="#box4">グラフィックデザイン</a></li>
+  </ul>
+</nav>
+<div class="circle-bg"></div>
+<main>
+  <section id="box1" class="box" data-section-name="Web">
+    <div class="container">
+      <h2>Webプログラミング基礎演習</h2>
+      <p class="text01">サークルのホームページをHTML、CSSを使用して制作しました。</p>
+      <a href="https://campus.sun.ac.jp/system/bs122002/index02.html" class="btn bgleft"><span>作品はこちらから</span></a></div>
+  </section>
+  <section id="box2" class="box" data-section-name="CG">
+    <div class="container">
+      <h2>コンピュータグラフィックス、CGアニメーション</h2>
+      <p class="text01">shade、mayaを使用してCG作品を作成しました。</p>
+      <div class="images-container">
+        <div class="left"><a href="#transparency"><img src="image/スクリーンショット 2024-02-12 160549.png" width="643" height="486" alt="コンピュータグラフィックス作品"/><br>
+          </a> </div>
+        <div class="right"><iframe width="562" height="427" src="https://www.youtube.com/embed/xhpnnLfyFOY?autoplay=1&mute=1&loop=1&playlist=xhpnnLfyFOY" title="kadai13 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+      </div>
+    </div>
+  </section>
+  <section id="box3" class="box" data-section-name="Mathematical　Modeling">
+    <div class="container">
+      <h2>数理造形演習・コンピュータグラフィックス演習</h2>
+      <p class="text01">HTML5とJavaScriptを使用した数理造形の作品を製作しました。</p>
+      <div class="images-container">
+        <div class="left"><a href="#transparency"><img src="image/スクリーンショット 2024-07-18 150442.png" width="776" height="530" alt="数理造形演習作品"/><br>
+          </a> <a href="draw11.html" class="btn bgleft"><span>数理造形演習作品</span></a><br>
+        </div>
+        <div class="right"><a href="#transparency"><img src="image/kadai01.png" width="1280" height="720" alt="コンピュータグラフィックス演習作品"/><br>
+          </a> <a href="draw01.html" class="btn bgleft"><span>コンピュータグラフィックス演習作品</span></a><br>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="box4" class="box" data-section-name="Graphic Design">
+    <div class="container">
+      <h2>グラフィックデザイン</h2>
+      <p class="text01">Photoshop、Illustratorを使用して、様々な作品を作成しました。</p>
+      <div class="images-container">
+        <div class="left"><a href="#transparency"><img src="image/BS122002_P2.jpg" width="1776" height="1332" alt="Photoshop作品2"/></a></div>
+        <div class="right"><a href="#transparency"><img src="image/BS122002_I1.jpg" width="2213" height="3036" alt="Illustrator作品"/></a></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer id="footer"> <small>&copy; 2024 Itsuwa Ayumu</small> </footer>
+<!-- JavaScript --> 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollify/1.0.21/jquery.scrollify.min.js"></script> 
+<script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/6-1/js/6-1.js"></script> 
+<script src="progress.js"></script> 
+<script src="menu_anim.js"></script>
+</body>
+</html>
